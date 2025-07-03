@@ -13,7 +13,7 @@
 
             <label for="creator">Créateur :</label>
             <select id="creator" th:field="*{creator.id}" required>
-                <option value="" disabled selected>-- Sélectionnez un utilisateur --</option>
+                <option value="" disabled selected>Les utilisateurs</option>
                 <option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.username}"></option>
             </select>
 

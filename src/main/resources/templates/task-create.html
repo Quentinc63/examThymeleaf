@@ -13,19 +13,19 @@
 
             <label for="assigneeId">Assigné à :</label>
             <select id="assigneeId" th:field="*{assignee.id}" required>
-                <option value="">-- Sélectionnez un utilisateur --</option>
+                <option value="">lEs users</option>
                 <option th:each="user : ${userList}"
                         th:value="${user.id}"
                         th:text="${user.username}"></option>
             </select>
-
+            <label for="projectId">Projet :</label>
             <select id="projectId" th:field="*{project.id}" required>
-                <option value="">-- Sélectionnez un projet --</option>
+                <option value="">Les projects</option>
                 <option th:each="project : ${projectList}" th:value="${project.id}" th:text="${project.name}"></option>
             </select>
             <label for="status">Statut :</label>
             <select id="status" th:field="*{status}" required>
-                <option value="">-- Sélectionnez un statut --</option>
+                <option value="">Les status</option>
                 <option th:each="status : ${taskStatuses}"
                         th:value="${status}"
                         th:text="${status}"></option>

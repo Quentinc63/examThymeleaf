@@ -10,9 +10,7 @@ import com.humanbooster.exam.model.Project;
 @Service
 public class ProjectService {
 
-    
-
-    private final List<Project> projects = new ArrayList<>();
+    private static final List<Project> projects = new ArrayList<>();
 
     public List<Project> getAllProjects() {
         return projects;

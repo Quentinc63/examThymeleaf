@@ -7,20 +7,11 @@ import org.springframework.stereotype.Service;
 import com.humanbooster.exam.model.Task;
 
 
-
-// @Data
-// @AllArgsConstructor
-// @NoArgsConstructor
-// public class Task {
-//     private Long id;
-//     private String title;
-//     private TaskStatus status;
-//     private User assignee;
-    
-// }
 @Service
 public class TaskService {
-    private final List<Task> tasks = new ArrayList<>();
+
+    private static final List<Task> tasks = new ArrayList<>();
+    
     public List<Task> getAllTasks() {
         return tasks;
     }

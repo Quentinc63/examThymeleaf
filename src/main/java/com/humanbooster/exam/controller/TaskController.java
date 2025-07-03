@@ -1,6 +1,7 @@
 package com.humanbooster.exam.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,7 +48,7 @@ public class TaskController {
     }
 
     @PostMapping("/tasks/create")
-    public String saveTask(@ModelAttribute Task task) {
+    public String saveTask(@ModelAttribute Task task, BindingResult result) {
         User user = userService.getById(task.getAssignee().getId());
 
         task.setAssignee(user);

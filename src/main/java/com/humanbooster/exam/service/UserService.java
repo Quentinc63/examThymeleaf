@@ -11,8 +11,7 @@ import com.humanbooster.exam.model.User;
 @Service
 public class UserService {
     
-
-    private final List<User> users = new ArrayList<>();
+    private static final List<User> users = new ArrayList<>();
 
     public List<User> getAllUsers() {
         return users;
