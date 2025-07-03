@@ -10,13 +10,9 @@ import com.humanbooster.exam.model.Project;
 @Service
 public class ProjectService {
 
-    private final List<Project> projects = new ArrayList<>(
-        List.of(
-            new Project(1L, "Project Alpha", null, new ArrayList<>()),
-            new Project(2L, "Project Beta", null, new ArrayList<>()),
-            new Project(3L, "Project Gamma", null, new ArrayList<>())
-        )
-    );
+    
+
+    private final List<Project> projects = new ArrayList<>();
 
     public List<Project> getAllProjects() {
         return projects;

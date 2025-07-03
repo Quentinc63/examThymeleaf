@@ -7,7 +7,19 @@
     <section>
         <h1>Page d'un project</h1>
         <h2 th:text="${project.name}"></h2>
+        <p>Id du project:</p>
         <p th:text="${project.id}"></p>
+        <p>Nom du createur:</p>
+        <p th:text="${project.creator != null ? project.creator.username : 'Inconnu'}">Créateur</p>
+        <h2>Tâches liées :</h2>
+        <ul>
+            <li th:each="task : ${project.tasks}">
+                <span th:text="${task.title}">Titre de la tâche</span> - 
+                <span th:text="${task.status}">Status</span> - 
+                <span th:text="${task.assignee.username}">Assigné à</span>
+            </li>
+        </ul>
+
 
         
     </section>

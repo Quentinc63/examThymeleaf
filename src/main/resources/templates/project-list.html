@@ -11,6 +11,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Nom</th>
+                    <th>Createur du project</th>
                     <th>Lien du project</th>
                 </tr>
             </thead>
@@ -18,6 +19,7 @@
                 <tr th:each="project : ${projectList}">
                     <td th:text="${project.id}"></td>
                     <td th:text="${project.name}"></td>
+                    <td th:text="${project.creator != null ? project.creator.username : 'Inconnu'}">Créateur</td>
                     <td>
                         <a th:href="@{/projects/{id}(id=${project.id})}">Voir le project</a>
                     </td>

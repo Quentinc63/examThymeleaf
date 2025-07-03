@@ -10,14 +10,9 @@ import com.humanbooster.exam.model.User;
 
 @Service
 public class UserService {
+    
 
-    private final List<User> users = new ArrayList<>(
-        List.of(
-            new User(1L, "john_doe"),
-            new User(2L, "jane_doe"),
-            new User(3L, "alice_smith")
-        )
-    );
+    private final List<User> users = new ArrayList<>();
 
     public List<User> getAllUsers() {
         return users;

@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +29,7 @@ import com.humanbooster.exam.service.UserService;
 //     private List<Task> tasks = new ArrayList<>();
 // }
 @Controller
+
 public class ProjectController {
 
     private final ProjectService projectService;
@@ -52,7 +54,10 @@ public class ProjectController {
     }
 
     @PostMapping("/projects/create")
-    public String createProject(@RequestParam String name, @RequestParam Long userId) {
+    public String createProject(@RequestParam String name, @RequestParam Long userId, BindingResult result) {
+        if (result.hasErrors()) {
+            return "project-create";
+        }
         User creator = userService.getById(userId);
         if (creator != null) {
             Project project = new Project(null, name, creator, new ArrayList<>());

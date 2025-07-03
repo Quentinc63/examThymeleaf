@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="fragments/layout :: layout(~{::title},~{::section})">
+<head>
+    <title>Formulaire creation DE TASK</title>
+</head>
+<body>
+    <section>
+        <h1>Formulaire de creation de TASK</h1>
+        <form th:action="@{/tasks/create}" th:object="${task}" method="post">
+            <label for="title">Titre de la tâche :</label>
+            <input type="text" id="title" th:field="*{title}" required />
+            <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color:red"></div>
+
+            <label for="assigneeId">Assigné à :</label>
+            <select id="assigneeId" th:field="*{assignee.id}" required>
+                <option value="">-- Sélectionnez un utilisateur --</option>
+                <option th:each="user : ${userList}"
+                        th:value="${user.id}"
+                        th:text="${user.username}"></option>
+            </select>
+
+            <select id="projectId" th:field="*{project.id}" required>
+                <option value="">-- Sélectionnez un projet --</option>
+                <option th:each="project : ${projectList}" th:value="${project.id}" th:text="${project.name}"></option>
+            </select>
+            <label for="status">Statut :</label>
+            <select id="status" th:field="*{status}" required>
+                <option value="">-- Sélectionnez un statut --</option>
+                <option th:each="status : ${taskStatuses}"
+                        th:value="${status}"
+                        th:text="${status}"></option>
+            </select>
+
+            <button type="submit">Créer</button>
+        </form>
+    </section>
+</body>
+</html>
