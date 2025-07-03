@@ -6,17 +6,16 @@
 <body>
     <section>
         <h1>Formulaire de creation de project</h1>
-        <form th:action="@{/projects/create}" method="post" th:object="${project}">
-            <label for="name">Nom du projet:</label>
-            <input type="text" id="name" name="name" th:field="*{name}" required />
-            <!-- <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red;"></div> -->
-            <select name="userId">
-                <option th:each="user : ${userList}"
-                        th:value="${user.id}"
-                        th:text="${user.username}">
-                </option>
+        <form th:action="@{/projects/create}" th:object="${project}" method="post">
+            <label for="name">Nom du projet :</label>
+            <input type="text" id="name" th:field="*{name}"  />
+            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red;"></div>
+
+            <label for="creator">Créateur :</label>
+            <select id="creator" th:field="*{creator.id}" required>
+                <option value="" disabled selected>-- Sélectionnez un utilisateur --</option>
+                <option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.username}"></option>
             </select>
-            <!-- <div th:if="${#fields.hasErrors('id')}" th:errors="*{id}" style="color: red;"></div> -->
 
             <button type="submit">Créer</button>
         </form>
