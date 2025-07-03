@@ -1,11 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" th:replace="fragments/layout :: layout(~{::title},~{::section})">
 <head>
-    <title>Home page</title>
+    <title> Tout nos projects</title>
 </head>
 <body>
     <section>
-        <h1>Bienvenu Mostapha</h1>
+        <h1>Tout nos projects</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Lien du project</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="project : ${projectList}">
+                    <td th:text="${project.id}"></td>
+                    <td th:text="${project.name}"></td>
+                    <td>
+                        <a th:href="@{/projects/{id}(id=${project.id})}">Voir le project</a>
+                    </td>
+                </tr>
+            </tbody>
         
     </section>
     

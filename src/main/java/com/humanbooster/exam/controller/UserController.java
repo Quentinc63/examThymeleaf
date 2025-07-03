@@ -17,7 +17,6 @@ import jakarta.validation.Valid;
 
 
 @Controller
-
 public class UserController {
 
     private final List<User> users = new ArrayList<>(
@@ -30,7 +29,7 @@ public class UserController {
 
     @GetMapping("/users/create")
     public String createUserForm(Model model) {
-        model.addAttribute("user", new User()); // ← Vous créez l'objet ici
+        model.addAttribute("user", new User());
         return "user-create";
     }
 
