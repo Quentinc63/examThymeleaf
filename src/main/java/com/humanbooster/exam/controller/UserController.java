@@ -1,8 +1,5 @@
 package com.humanbooster.exam.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.humanbooster.exam.model.User;
+import com.humanbooster.exam.service.UserService;
 
 import jakarta.validation.Valid;
 
@@ -19,13 +17,17 @@ import jakarta.validation.Valid;
 @Controller
 public class UserController {
 
-    private final List<User> users = new ArrayList<>(
-        List.of(
-            new User(1L, "john_doe"),
-            new User(2L, "jane_doe"),
-            new User(3L, "alice_smith")
-        )
-    );
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping("/users")
+    public String listUsers(Model model) {
+        model.addAttribute("userList", userService.getAllUsers());
+        return "user";
+    }
 
     @GetMapping("/users/create")
     public String createUserForm(Model model) {
@@ -33,22 +35,14 @@ public class UserController {
         return "user-create";
     }
 
-    @GetMapping("/users")
-    public String listUsers(Model model) {
-        model.addAttribute("userList", users);
-        return "user"; 
-    }
-
     @PostMapping("/users/create")
     public String createUser(@Valid @ModelAttribute User user, BindingResult result) {
         if (result.hasErrors()) {
-            return "user-create"; 
+            return "user-create";
         }
-        
-        user.setId((long) (users.size() + 1));
-        users.add(user);
-        return "redirect:/users"; 
+
+        userService.addUser(user);
+        return "redirect:/users";
     }
-    
-    
 }
+

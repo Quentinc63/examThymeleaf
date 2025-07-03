@@ -9,11 +9,14 @@
         <form th:action="@{/projects/create}" method="post" th:object="${project}">
             <label for="name">Nom du projet:</label>
             <input type="text" id="name" name="name" th:field="*{name}" required />
-            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red;"></div>
-
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" th:field="*{description}" required></textarea>
-            <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red;"></div>
+            <!-- <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red;"></div> -->
+            <select name="userId">
+                <option th:each="user : ${userList}"
+                        th:value="${user.id}"
+                        th:text="${user.username}">
+                </option>
+            </select>
+            <!-- <div th:if="${#fields.hasErrors('id')}" th:errors="*{id}" style="color: red;"></div> -->
 
             <button type="submit">Créer</button>
         </form>

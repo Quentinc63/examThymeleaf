@@ -1,13 +1,17 @@
 package com.humanbooster.exam.controller;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.humanbooster.exam.model.Project;
+import com.humanbooster.exam.model.User;
+import com.humanbooster.exam.service.ProjectService;
+import com.humanbooster.exam.service.UserService;
 
 
 
@@ -26,43 +30,45 @@ import com.humanbooster.exam.model.Project;
 @Controller
 public class ProjectController {
 
-    private final List<Project> projects = new ArrayList<>(
-        List.of(
-            new Project(1L, "Project Alpha", null, new ArrayList<>()),
-            new Project(2L, "Project Beta", null, new ArrayList<>()),
-            new Project(3L, "Project Gamma", null, new ArrayList<>())
-        )
-    );
+    private final ProjectService projectService;
+    private final UserService userService;
 
-    @GetMapping("/projects/create")
-    public String createProjectForm(Model model) {
-        model.addAttribute("project", new Project());
-        return "project-create";
+    public ProjectController(ProjectService projectService, UserService userService) {
+        this.projectService = projectService;
+        this.userService = userService;
     }
 
     @GetMapping("/projects")
     public String listProjects(Model model) {
-        model.addAttribute("projectList", projects);
+        model.addAttribute("projectList", projectService.getAllProjects());
         return "project-list";
+    }
 
+    @GetMapping("/projects/create")
+    public String createProjectForm(Model model) {
+        model.addAttribute("project", new Project());
+        model.addAttribute("userList", userService.getAllUsers()); // pour le select
+        return "project-create";
+    }
+
+    @PostMapping("/projects/create")
+    public String createProject(@RequestParam String name, @RequestParam Long userId) {
+        User creator = userService.getById(userId);
+        if (creator != null) {
+            Project project = new Project(null, name, creator, new ArrayList<>());
+            projectService.addProject(project);
+        }
+        return "redirect:/projects";
     }
 
     @GetMapping("/projects/{id}")
-    public String viewProject(Model model, @PathVariable Long id) { // ← Ajoutez @PathVariable
-        Project project = projects.stream()
-            .filter(p -> p.getId().equals(id))
-            .findFirst()
-            .orElse(null);
-    
+    public String viewProject(@PathVariable Long id, Model model) {
+        Project project = projectService.getById(id);
         if (project != null) {
             model.addAttribute("project", project);
-            return "project-detail"; // ← Changez le nom du template pour éviter confusion
+            return "project-detail";
         } else {
             return "redirect:/projects";
         }
     }
-
-    
-
-    
 }
