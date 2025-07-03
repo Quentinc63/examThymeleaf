@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" th:replace="fragments/layout :: layout(~{::title},~{::section})">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home page</title>
+    <title>Formulaire de creation d'un user</title>
 </head>
 <body>
     <section>
         <h1>Formulaire de creation de user</h1>
-        <form th:action="@{/users}" method="post">
+        <form th:action="@{/users/create}" method="post" th:object="${user}">
             <label for="username">Nom d'utilisateur:</label>
-            <input type="text" id="username" name="username" required>
+            <input type="text" id="username" name="username"  th:field="*{username}" />
+            <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color: red;"></div>
             <button type="submit">Créer</button>
         </form>
     </section>
-    
 </body>
 </html>

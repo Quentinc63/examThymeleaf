@@ -5,9 +5,14 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.humanbooster.exam.model.User;
+
+import jakarta.validation.Valid;
 
 
 
@@ -24,7 +29,8 @@ public class UserController {
     );
 
     @GetMapping("/users/create")
-    public String createUserForm() {
+    public String createUserForm(Model model) {
+        model.addAttribute("user", new User()); // ← Vous créez l'objet ici
         return "user-create";
     }
 
@@ -32,6 +38,17 @@ public class UserController {
     public String listUsers(Model model) {
         model.addAttribute("userList", users);
         return "user"; 
+    }
+
+    @PostMapping("/users/create")
+    public String createUser(@Valid @ModelAttribute User user, BindingResult result) {
+        if (result.hasErrors()) {
+            return "user-create"; 
+        }
+        
+        user.setId((long) (users.size() + 1));
+        users.add(user);
+        return "redirect:/users"; 
     }
     
     
