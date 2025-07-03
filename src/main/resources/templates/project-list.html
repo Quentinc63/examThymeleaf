@@ -13,6 +13,7 @@
                     <th>Nom</th>
                     <th>Createur du project</th>
                     <th>Lien du project</th>
+                    <th> Nombres de taches</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,6 +24,7 @@
                     <td>
                         <a th:href="@{/projects/{id}(id=${project.id})}">Voir le project</a>
                     </td>
+                    <td th:text="${#lists.size(project.tasks)}">0</td>
                 </tr>
             </tbody>
         

@@ -15,6 +15,12 @@ public class ProjectService {
     public List<Project> getAllProjects() {
         return projects;
     }
+    public Project findById(Long id) {
+    return projects.stream()
+        .filter(p -> p.getId().equals(id))
+        .findFirst()
+        .orElse(null);
+    }
 
     public void addProject(Project project) {
         project.setId((long) (projects.size() + 1));

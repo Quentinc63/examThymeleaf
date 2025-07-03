@@ -11,7 +11,7 @@ import com.humanbooster.exam.model.Task;
 public class TaskService {
 
     private static final List<Task> tasks = new ArrayList<>();
-    
+
     public List<Task> getAllTasks() {
         return tasks;
     }

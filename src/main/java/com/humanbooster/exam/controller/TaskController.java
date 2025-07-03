@@ -13,18 +13,10 @@ import com.humanbooster.exam.model.User;
 import com.humanbooster.exam.service.ProjectService;
 import com.humanbooster.exam.service.TaskService;
 import com.humanbooster.exam.service.UserService;
-// @Data
-// @AllArgsConstructor
-// @NoArgsConstructor
-// public class Task {
-//     private Long id;
-//     private String title;
-//     private TaskStatus status;
-//     private User assignee;
 
 import jakarta.validation.Valid;
     
-// }
+
 @Controller
 public class TaskController {
 
@@ -54,13 +46,26 @@ public class TaskController {
         if (result.hasErrors()) {
             model.addAttribute("userList", userService.getAllUsers());
             model.addAttribute("projectList", projectService.getAllProjects());
-            model.addAttribute("taskStatuses", TaskStatus.values()); 
+            model.addAttribute("taskStatuses", TaskStatus.values());
             return "task-create";
         }
+
+        if (task.getProject() != null && task.getProject().getId() != null) {
+            Project project = projectService.findById(task.getProject().getId());
+            task.setProject(project);
+            project.getTasks().add(task); 
+        }
+
+        if (task.getAssignee() != null && task.getAssignee().getId() != null) {
+            User user = userService.getById(task.getAssignee().getId());
+            task.setAssignee(user);
+        }
+
         taskService.addTask(task);
-        task.getProject().getTasks().add(task);
-        return "redirect:/tasks";
+
+        return "redirect:/projects";
     }
+
     
     
 }

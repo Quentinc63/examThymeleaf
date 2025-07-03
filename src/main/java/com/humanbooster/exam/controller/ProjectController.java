@@ -15,19 +15,6 @@ import com.humanbooster.exam.service.UserService;
 import jakarta.validation.Valid;
 
 
-
-
-
-
-// @Data
-// @AllArgsConstructor
-// @NoArgsConstructor
-// public class Project {
-//     private Long id;
-//     private String name;
-//     private User creator;
-//     private List<Task> tasks = new ArrayList<>();
-// }
 @Controller
 
 public class ProjectController {
@@ -43,13 +30,16 @@ public class ProjectController {
     @GetMapping("/projects")
     public String listProjects(Model model) {
         model.addAttribute("projectList", projectService.getAllProjects());
+        // recuper les taches
+        model.addAttribute("userList", userService.getAllUsers()); 
+        model.addAttribute("taskStatuses", com.humanbooster.exam.model.TaskStatus.values()); 
         return "project-list";
     }
 
     @GetMapping("/projects/create")
     public String createProjectForm(Model model) {
         model.addAttribute("project", new Project());
-        model.addAttribute("userList", userService.getAllUsers()); // pour le select
+        model.addAttribute("userList", userService.getAllUsers()); 
         return "project-create";
     }
    
