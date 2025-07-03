@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="fragments/layout :: layout(~{::title},~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page</title>
+</head>
+<body>
+    <section>
+        <h1>Liste des users</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${userList}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.username}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/users/create}">Créer un nouvel utilisateur</a>
+    </section>
+    
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="fragments/layout :: layout(~{::title},~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page</title>
+</head>
+<body>
+    <section>
+        <h1>Formulaire de creation de user</h1>
+        <form th:action="@{/users}" method="post">
+            <label for="username">Nom d'utilisateur:</label>
+            <input type="text" id="username" name="username" required>
+            <button type="submit">Créer</button>
+        </form>
+    </section>
+    
+</body>
+</html>

@@ -8,9 +8,9 @@
 <body>
     <header>
         <h1>BONJOUR</h1>
-        <!-- <a th:href="@{/}" th:text="#{nav.home}">Accueil</a>
-        <a th:href="@{/salut}" th:text="#{nav.greeting}">Dire Bonjour</a>
-        <a th:href="@{/products}" th:text="#{nav.products}">Liste des produits</a> -->
+        <a th:href="@{/}" >Accueil</a>
+        <a th:href="@{/users/create}" >Creer un user</a>
+        <a th:href="@{/users}" >Liste des users</a>
     </header>
     <main>
         <div th:replace="${content}"></div>
