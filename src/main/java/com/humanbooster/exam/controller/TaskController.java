@@ -21,6 +21,8 @@ import com.humanbooster.exam.service.UserService;
 //     private String title;
 //     private TaskStatus status;
 //     private User assignee;
+
+import jakarta.validation.Valid;
     
 // }
 @Controller
@@ -48,16 +50,16 @@ public class TaskController {
     }
 
     @PostMapping("/tasks/create")
-    public String saveTask(@ModelAttribute Task task, BindingResult result) {
-        User user = userService.getById(task.getAssignee().getId());
-
-        task.setAssignee(user);
-        Project project = projectService.getById(task.getProject().getId());
-        task.setProject(project);
-        project.getTasks().add(task);
+    public String saveTask(@Valid @ModelAttribute Task task, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("userList", userService.getAllUsers());
+            model.addAttribute("projectList", projectService.getAllProjects());
+            model.addAttribute("taskStatuses", TaskStatus.values()); 
+            return "task-create";
+        }
         taskService.addTask(task);
-        return "redirect:/projects/" + task.getProject().getId();
-        
+        task.getProject().getTasks().add(task);
+        return "redirect:/tasks";
     }
     
     

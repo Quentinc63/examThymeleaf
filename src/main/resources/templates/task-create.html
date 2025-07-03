@@ -8,28 +8,31 @@
         <h1>Formulaire de creation de TASK</h1>
         <form th:action="@{/tasks/create}" th:object="${task}" method="post">
             <label for="title">Titre de la tâche :</label>
-            <input type="text" id="title" th:field="*{title}" required />
+            <input type="text" id="title" th:field="*{title}" />
             <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color:red"></div>
 
             <label for="assigneeId">Assigné à :</label>
-            <select id="assigneeId" th:field="*{assignee.id}" required>
+            <select id="assigneeId" th:field="*{assignee.id}" >
                 <option value="">lEs users</option>
                 <option th:each="user : ${userList}"
                         th:value="${user.id}"
                         th:text="${user.username}"></option>
             </select>
+            <div th:if="${#fields.hasErrors('assignee')}" th:errors="*{assignee}" style="color:red"></div>
             <label for="projectId">Projet :</label>
-            <select id="projectId" th:field="*{project.id}" required>
+            <select id="projectId" th:field="*{project.id}" >
                 <option value="">Les projects</option>
                 <option th:each="project : ${projectList}" th:value="${project.id}" th:text="${project.name}"></option>
             </select>
+            <div th:if="${#fields.hasErrors('project')}" th:errors="*{project}" style="color:red"></div>
             <label for="status">Statut :</label>
-            <select id="status" th:field="*{status}" required>
+            <select id="status" th:field="*{status}" >
                 <option value="">Les status</option>
                 <option th:each="status : ${taskStatuses}"
                         th:value="${status}"
                         th:text="${status}"></option>
             </select>
+            <div th:if="${#fields.hasErrors('status')}" th:errors="*{status}" style="color:red"></div>
 
             <button type="submit">Créer</button>
         </form>
